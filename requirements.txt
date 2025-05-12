@@ -1,0 +1,10 @@
+
+fastapi
+uvicorn
+python-multipart
+pydantic
+psycopg2-binary
+streamlit
+requests
+deepface
+numpy
