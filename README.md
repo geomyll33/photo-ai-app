@@ -1,37 +1,59 @@
-
 # 📸 AI-Powered Photo Search App
 
 This app helps you search and organize your photos using AI. It detects faces, estimates age, identifies if a person is alone, and allows search by face similarity or metadata.
 
-## 🚀 Quick Start (with Docker Compose)
+## ✅ Features
 
-1. Clone the repo:
-   ```
-   git clone <your-repo-url>
-   cd photo-ai-app
-   ```
+- Upload photos and auto-analyze them using DeepFace
+- Estimate age, detect group or solo presence
+- Search photos by person, age range, or similarity
+- View latest 10 Google Photos using API
+- PostgreSQL backend
+- Streamlit frontend
+- Docker-based deployment
 
-2. Run with Docker:
-   ```
-   docker-compose up --build
-   ```
+## 🚀 Quick Start
 
-3. Access the app:
-   - UI: http://localhost:8501
-   - API: http://localhost:8000/docs
+### 1. Clone and extract
 
-## 🧪 Features
+```
+git clone <your-repo-url>
+cd photo-ai-app
+```
 
-- Upload & analyze photos with DeepFace
-- PostgreSQL metadata storage
-- Face similarity search
-- Fully containerized
+### 2. Run
 
-## 📂 Structure
+```
+docker-compose up --build
+```
+
+### 3. Authenticate Google Photos (first time only)
+
+```
+python auth_google_photos.py
+```
+
+### 4. Make sure to include in your project root:
+
+- `credentials.json` (downloaded from Google Cloud Console)
+- `google_credentials.json` (auto-generated after authentication)
+
+## 🐳 Docker Volume Mounts
+
+Update your docker-compose.yml to include:
+
+```yaml
+volumes:
+  - ./uploads:/app/uploads
+  - ./credentials.json:/app/credentials.json
+  - ./google_credentials.json:/app/google_credentials.json
+```
+
+## 🗂 Project Structure
 
 - `app.py`: FastAPI backend
-- `streamlit_app.py`: Streamlit frontend
-- `Dockerfile`: Backend container
-- `Dockerfile.streamlit`: UI container
-- `requirements.txt`: Python deps
-- `uploads/`: Photo storage
+- `streamlit_app.py`: UI interface
+- `auth_google_photos.py`: run once to link Google Photos
+- `Dockerfile` and `Dockerfile.streamlit`
+- `requirements.txt`
+- `credentials.json`, `google_credentials.json` (manually added)

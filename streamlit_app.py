@@ -5,7 +5,7 @@ import os
 
 st.title("AI-Powered Photo Search")
 
-menu = st.sidebar.selectbox("Choose action", ["Upload Photo", "Search"])
+menu = st.sidebar.selectbox("Choose action", ["Upload Photo", "Search", "Google Photos"])
 
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 
@@ -32,3 +32,12 @@ elif menu == "Search":
         }
         response = requests.post(f"{API_URL}/search", json=query)
         st.json(response.json())
+
+elif menu == "Google Photos":
+    st.subheader("Google Photos (latest 10 images)")
+    response = requests.get(f"{API_URL}/google-photos")
+    if response.ok:
+        for photo in response.json().get("photos", []):
+            st.image(photo["url"], caption=photo["filename"])
+    else:
+        st.error(response.json().get("error"))
